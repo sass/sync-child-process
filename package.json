@@ -1,6 +1,6 @@
 {
   "name": "sync-child-process",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Run a subprocess synchronously and interactively in Node.js",
   "repository": "sass/sync-child-process",
   "author": "Google Inc.",
@@ -23,6 +23,7 @@
     "check:tsc": "tsc --noEmit",
     "clean": "gts clean",
     "compile": "tsc -p tsconfig.build.json",
+    "doc": "typedoc lib/index.ts",
     "fix": "gts fix",
     "test": "jest"
   },
