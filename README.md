@@ -3,16 +3,24 @@
 This package exposes a `SyncChildProcess` class that allows Node.js to run a
 subprocess synchronously *and* interactively.
 
+[**API Docs**]
+
+[**API Docs**]: https://sass.github.io/sync-child-process/classes/SyncChildProcess.html
+
 ## Usage
 
-Use `new SyncChildProcess()` to start running a subprocess. This supports the
+Use [`new SyncChildProcess()`] to start running a subprocess. This supports the
 same API as [`child_process.spawn()`] other than a few options. You can send
-input to the process using `process.stdin`, and receive events from it (stdout,
-stderr, or exit) using `process.next()`. This implements [the iterator
-protocol], but *not* the iterable protocol because it's intrinsically stateful.
+input to the process using [`process.stdin`], and receive events from it
+(stdout, stderr, or exit) using [`process.next()`]. This implements [the
+iterator protocol], but *not* the iterable protocol because it's intrinsically
+stateful.
 
-[the iterator protocol]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#the_iterator_protocol
+[`new SyncChildProcess()`]: https://sass.github.io/sync-child-process/classes/SyncChildProcess.html#constructor
 [`child_process.spawn()`]: https://nodejs.org/api/child_process.html#child_processspawncommand-args-options
+[`process.stdin`]: https://sass.github.io/sync-child-process/classes/SyncChildProcess.html#stdin
+[`process.next()`]: https://sass.github.io/sync-child-process/classes/SyncChildProcess.html#next
+[the iterator protocol]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#the_iterator_protocol
 
 ```js
 import {SyncChildProcess} from 'sync-child-process';
