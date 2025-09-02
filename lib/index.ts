@@ -71,16 +71,13 @@ export class SyncChildProcess
     this.worker.on('error', console.error);
 
     this.stdin = new stream.Writable({
-      write: (chunk: Buffer, encoding, callback) => {
+      write: (chunk: Buffer<ArrayBuffer>, encoding, callback) => {
         this.port.postMessage(
           {
             type: 'stdin',
             data: chunk,
           },
-          // TODO - DefinitelyTyped/DefinitelyTyped#73602: Remove cast to ArrayBuffer.
-          isMarkedAsUntransferable(chunk.buffer)
-            ? undefined
-            : [chunk.buffer as ArrayBuffer],
+          isMarkedAsUntransferable(chunk.buffer) ? undefined : [chunk.buffer],
         );
         callback();
       },
