@@ -75,9 +75,12 @@ export class SyncChildProcess
         this.port.postMessage(
           {
             type: 'stdin',
-            data: chunk as Buffer,
+            data: chunk,
           },
-          isMarkedAsUntransferable(chunk.buffer) ? undefined : [chunk.buffer],
+          // TODO - DefinitelyTyped/DefinitelyTyped#73602: Remove cast to ArrayBuffer.
+          isMarkedAsUntransferable(chunk.buffer)
+            ? undefined
+            : [chunk.buffer as ArrayBuffer],
         );
         callback();
       },
