@@ -15,7 +15,7 @@
     "dist/**/*"
   ],
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=22.0.0"
   },
   "scripts": {
     "check": "npm-run-all check:gts check:tsc",
