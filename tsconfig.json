@@ -4,6 +4,7 @@
     "outDir": "dist",
     "rootDir": ".",
     "lib": ["DOM"],
+    "moduleResolution": "bundler",
     "types": ["node", "jest"]
   },
   "include": [
