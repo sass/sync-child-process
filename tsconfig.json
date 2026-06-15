@@ -3,7 +3,9 @@
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": ".",
-    "lib": ["DOM"]
+    "lib": ["DOM"],
+    "moduleResolution": "bundler",
+    "types": ["node", "jest"]
   },
   "include": [
     "*.ts",
