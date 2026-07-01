@@ -7,10 +7,7 @@ export type Event = StdoutEvent | StderrEvent | ExitEvent;
 
 /** An event sent from the worker to the host. */
 export type InternalEvent =
-  | InternalStdoutEvent
-  | InternalStderrEvent
-  | ExitEvent
-  | ErrorEvent;
+  InternalStdoutEvent | InternalStderrEvent | ExitEvent | ErrorEvent;
 
 /** An event indicating that data has been emitted over stdout. */
 export interface StdoutEvent {
