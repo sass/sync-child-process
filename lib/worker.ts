@@ -4,7 +4,7 @@
 
 import {
   MessagePort,
-  TransferListItem,
+  Transferable,
   parentPort,
   workerData,
 } from 'worker_threads';
@@ -18,7 +18,7 @@ import {InternalEvent} from './event';
 const port = new SyncMessagePort(workerData.port as MessagePort);
 
 /** A more type-safe way to call `port.postMesage()` */
-function emit(event: InternalEvent, transferList?: TransferListItem[]): void {
+function emit(event: InternalEvent, transferList?: Transferable[]): void {
   port.postMessage(event, transferList);
 }
 
