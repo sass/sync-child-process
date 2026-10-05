@@ -68,6 +68,38 @@ describe('SyncChildProcess', () => {
     });
   });
 
+  describe('emits an error', () => {
+    it('when writing to a closed stdin', () => {
+      withJSProcess('console.log("ready!");', node => {
+        expectStdout(node.next(), 'ready!\n');
+        node.stdin.write('hi there!\n');
+
+        // This test is inherently time-dependent: in order to throw an error,
+        // the inner process must exit before the worker thread writes to
+        // stdin. In order to accommodate that, we expect one of two paths:
+        // either the write succeeds and the process exits immediatley, or the
+        // write fails and we get an EPIPE followed by an exit.
+        //
+        // The main thing we *don't* want to see here is a deadlock, in which
+        // case neither expectation will be satisfied.
+        let result: NextResult;
+        try {
+          result = node.next();
+        } catch (err) {
+          expect(`${err}`).toMatch(/EPIPE/);
+          result = node.next();
+        }
+        expectExit(result, 0);
+      });
+    });
+
+    it('when the process fails to start', () => {
+      const process = new SyncChildProcess('non-existent-executable');
+      expect(() => process.next()).toThrow(/ENOENT/);
+      expectExit(process.next(), undefined);
+    });
+  });
+
   it('passes options to the subprocess', () => {
     withJSFile('console.log(process.env.SYNC_PROCESS_TEST);', file => {
       const node = new SyncChildProcess(process.argv0, [file], {
@@ -116,7 +148,7 @@ function expectStderr(result: NextResult, text: string): void {
  */
 function expectExit(
   result: NextResult,
-  codeOrSignal: number | NodeJS.Signals,
+  codeOrSignal: number | NodeJS.Signals | undefined,
 ): void {
   expect(result.done).toBe(true);
   const event = result.value!;

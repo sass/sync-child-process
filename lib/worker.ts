@@ -47,8 +47,13 @@ process.stderr.on('data', data => {
   emit({type: 'stderr', data}, [data.buffer]);
 });
 
+process.stdin.on('error', error => {
+  emit({type: 'error', error});
+});
+
 process.on('error', error => {
   emit({type: 'error', error});
+  emit({type: 'exit'});
 
   process.kill();
   parentPort!.close();

@@ -92,7 +92,10 @@ export class SyncChildProcess implements Iterator<
    * once when the process exits. If it's called again after that, it will
    * return `{done: true}` without a value.
    *
-   * If there's an error running the child process, this will throw that error.
+   * If there's an error starting the child process, the first call to this will
+   * throw that error, and the next call will an [ExitEvent] with status 1. If
+   * there's an error writing to stdin, the next call to this will throw that
+   * error, but the child process won't exit.
    */
   next(): IteratorResult<StdoutEvent | StderrEvent, ExitEvent | undefined> {
     if (this.stdin.destroyed) return {done: true, value: undefined};
@@ -110,7 +113,6 @@ export class SyncChildProcess implements Iterator<
         };
 
       case 'error':
-        this.close();
         throw message.error;
 
       case 'exit':
