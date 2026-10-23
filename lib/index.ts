@@ -104,12 +104,26 @@ export class SyncChildProcess implements Iterator<
     switch (message.type) {
       case 'stdout':
         return {
-          value: {type: 'stdout', data: Buffer.from(message.data.buffer)},
+          value: {
+            type: 'stdout',
+            data: Buffer.from(
+              message.data.buffer,
+              message.data.byteOffset,
+              message.data.length,
+            ),
+          },
         };
 
       case 'stderr':
         return {
-          value: {type: 'stderr', data: Buffer.from(message.data.buffer)},
+          value: {
+            type: 'stderr',
+            data: Buffer.from(
+              message.data.buffer,
+              message.data.byteOffset,
+              message.data.length,
+            ),
+          },
         };
 
       case 'error':
