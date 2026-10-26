@@ -1,3 +1,8 @@
+## 1.1.1
+
+* Fix a bug where large chunks of data emitted at once in `stdout` or `stderr`
+  could become corrupted.
+
 ## 1.1.0
 
 * Fix a bug where `ChildProcess` would hang when writing to the stdin of a
